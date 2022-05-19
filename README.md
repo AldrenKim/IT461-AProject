@@ -1,7 +1,7 @@
 # IT461-AProject
 IT461 Project
 
-#Group Members
+# Group Members
 Project Lead - Elram Espra
 Aldren Kim Concordia
 Edah Marie Bohol
