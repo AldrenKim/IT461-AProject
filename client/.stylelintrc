@@ -1,0 +1,65 @@
+{
+  "processors": [
+    "stylelint-processor-styled-components"
+  ],
+  "extends": [
+    "stylelint-config-recommended",
+    "stylelint-config-styled-components"
+  ],
+  "plugins": [
+    "stylelint-order",
+    "stylelint-csstree-validator"
+  ],
+  "rules": {
+    "max-nesting-depth": 1,
+    "csstree/validator": {
+      "ignore": [
+        "-styled-mixin0",
+        "-styled-mixin1",
+        "-styled-mixin2",
+        "-styled-mixin3",
+        "-styled-mixin4",
+        "-styled-mixin5",
+        "-styled-mixin6",
+        "-styled-mixin7",
+        "-styled-mixin8",
+        "-styled-mixin9"
+      ]
+    },
+    "order/order": [
+      "declarations"
+    ],
+    "order/properties-order": [
+      [
+        "display",
+        "position",
+        "margin",
+        "margin-bottom",
+        "margin-left",
+        "margin-right",
+        "margin-top",
+        "padding",
+        "padding-bottom",
+        "padding-left",
+        "padding-right",
+        "padding-top",
+        "height",
+        "width",
+        "max-height",
+        "max-width"
+      ],
+      {
+        "unspecified": "bottom"
+      }
+    ],
+    "selector-type-no-unknown": [
+      true,
+      {
+        "ignoreTypes": [
+          "/-styled-mixin/",
+          "$dummyValue"
+        ]
+      }
+    ]
+  }
+}
