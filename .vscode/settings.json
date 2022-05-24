@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "diffEditor.codeLens": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["typescript"],
+  "files.insertFinalNewline": true
+}
