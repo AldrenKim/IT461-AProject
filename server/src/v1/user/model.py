@@ -8,7 +8,7 @@ class UserModel():
         for user in users:
             if not isinstance(user, dict):
                 continue
-            if not ('id' in user and 'username' in user):
+            if not ('id' in user and 'username' in user and 'type' in user):
                 continue
             clean_users.append(user)
         return clean_users
@@ -21,8 +21,8 @@ class UserModel():
             return False
         queries = []
         for user in clean_users:
-            sql = "INSERT INTO users(username) VALUES(%s)"
-            queries.append({"sql": sql, "bind": user['username']})
+            sql = "INSERT INTO users(username, type) VALUES(%s, %s)"
+            queries.append({"sql": sql, "bind": (user['username'], user['type'])})
         db = Db.get_instance()
         result = db.transactional(queries)
         return users
@@ -36,7 +36,7 @@ class UserModel():
             if 'fields' in filters:
                 tmp_fields = []
                 for field in filters['fields']:
-                    if field in ['id', 'username']:
+                    if field in ['id', 'username', 'type']:
                         tmp_fields.append(field)
                 if len(tmp_fields) > 0:
                     fields = tmp_fields
@@ -66,8 +66,11 @@ class UserModel():
             return False
         queries = []
         for user in clean_users:
-            sql = "UPDATE users SET username = %s WHERE id = %s"
-            queries.append({"sql": sql, "bind": (user['username'], user['id'])})
+            sql = "UPDATE users SET "
+            for attr, value in user.__dict__.items():
+                sql += attr + " = " + value
+            sql += "WHERE id = %s"
+            queries.append({"sql": sql, "bind": user['id']})
         db = Db.get_instance()
         db.transactional(queries)
         return users

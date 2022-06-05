@@ -9,7 +9,7 @@
     "start": "concurrently -n 'client,server' -c 'bgBlue.bold,bgGreen.bold' 'npm run client' 'npm run server'",
     "preinstall": "cd server/dockers && docker-compose build",
     "postinstall": "cd client && npm i",
-    "mysql": "cd server/dockers && docker exec -it flask-db mysql -uroot -p"
+    "mysql": "cd server/dockers && docker exec -it flask-db mysql"
   },
   "repository": {
     "type": "git",
