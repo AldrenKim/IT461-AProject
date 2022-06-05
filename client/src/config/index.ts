@@ -1,0 +1,5 @@
+const BASE_API_URL = 'http://127.0.0.1:8080/';
+const API_VERSION = 'v1';
+const DEFAULT_LOCAL_STORAGE_KEY = 'react_app';
+
+export { API_VERSION, BASE_API_URL, DEFAULT_LOCAL_STORAGE_KEY };
