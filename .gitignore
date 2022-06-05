@@ -2,6 +2,3 @@ node_modules/
 __pycache__/
 *.http
 mysql-data/
-
-server/src/objects/*
-!server/src/objects/leaf.obj

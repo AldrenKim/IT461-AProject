@@ -1,55 +1,64 @@
-import { message } from 'antd';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 
-import { authLogin } from './api';
-import { AuthContext } from './contexts';
-import { AuthorizedRoutes, UnauthorizedRoutes } from './routes';
-
-import 'antd/dist/antd.css';
-import './index.css';
+import logo from './logo.svg';
 import './App.css';
-import { User } from './types';
-import { getLocalStorage, setLocalStorage } from './utils';
 
-export default function App() {
-  const [auth, setAuth] = useState<User>();
-  const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
+function App() {
+  const [dogs, setDogs] = useState([]);
+
+  async function show() {
+    const params = JSON.stringify({
+      password: 'admin',
+      username: 'admin',
+    });
+    console.log((await axios.get('http://127.0.0.1:8000/')).data);
+    const token = (
+      await axios.post('http://127.0.0.1:8000/v1/login', params, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+    ).data.token;
+    console.log(token);
+    const d = await axios.get('http://127.0.0.1:8000/v1/dogs', {
+      params: {
+        token,
+      },
+    });
+    console.log(d.data);
+    setDogs(d.data.data.map((dog: any) => dog.name));
+  }
 
   useEffect(() => {
-    const savedUser = getLocalStorage<User>();
-
-    setAuth(savedUser);
-  }, []);
-
-  async function login(username: string, password: string) {
-    setIsAuthenticating(true);
-
-    const user = await authLogin(username, password);
-
-    if (user?.accessToken) {
-      setAuth(user);
-      setLocalStorage(user);
-      message.success('Logged In');
-    } else {
-      message.error('Error logging in');
+    async function mount() {
+      // setDogs(dogsData);
     }
 
-    setIsAuthenticating(false);
-  }
-
-  async function logout() {
-    setIsAuthenticating(true);
-    setAuth(undefined);
-    setLocalStorage(null);
-    setIsAuthenticating(false);
-  }
-
-  const routesDisplay = auth?.accessToken ? <AuthorizedRoutes /> : <UnauthorizedRoutes />;
+    mount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ auth, isAuthenticating, login, logout }}>
-      <BrowserRouter>{routesDisplay}</BrowserRouter>
-    </AuthContext.Provider>
+    <div className="App">
+      <header className="App-header">
+        <img alt="logo" className="App-logo" src={logo} />
+        <p>
+          Edit <code>src/App.tsx</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Learn React
+        </a>
+        <button onClick={show}>show</button>
+        {dogs.join(', ')}
+      </header>
+    </div>
   );
 }
+
+export default App;

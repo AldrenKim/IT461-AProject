@@ -1,13 +1,14 @@
 from flask import Blueprint
+from flask_cors import CORS
 from v1.user.controller import UserController
-from v1.auth import jwt_token_required, admin_required
+from v1.auth import jwt_token_required
 
 class UserRouter():
     @staticmethod
     def handler():
         app = Blueprint('users', __name__, url_prefix='/v1/users')
+        CORS(app)
         app.before_request(jwt_token_required)
-        app.before_request(admin_required)
         controller = UserController()
         app.add_url_rule('/', methods=['POST'], view_func=controller.post)
         app.add_url_rule('/', methods=['GET'], view_func=controller.get)

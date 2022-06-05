@@ -1,12 +1,9 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true
-  },
-  "eslint.validate": ["typescript", "typescriptreact"],
-  "files.insertFinalNewline": true,
-  "eslint.workingDirectories": [{ "mode": "auto" }],
   "editor.formatOnSave": true,
-  "diffEditor.codeLens": true
+  "diffEditor.codeLens": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["typescript"],
+  "files.insertFinalNewline": true
 }
