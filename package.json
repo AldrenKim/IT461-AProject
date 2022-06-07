@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "cd server/dockers && docker-compose up",
     "client": "cd client && npm start",
-    "start": "concurrently -n 'client,server' -c 'bgBlue.bold,bgGreen.bold' 'npm run client' 'npm run server'",
+    "start": "concurrently -n \"client,server\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run client\" \"npm run server\"",
     "preinstall": "cd server/dockers && docker-compose build",
     "postinstall": "cd client && npm i",
     "mysql": "cd server/dockers && docker exec -it flask-db mysql"
