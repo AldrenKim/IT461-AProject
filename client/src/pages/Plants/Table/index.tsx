@@ -34,7 +34,7 @@ export default function PlantsTable() {
   }
 
   function handelAddNewItem() {
-    history.push(Route.HOME);
+    history.push(Route.CREATE.replace(':id', 'Plants'));
   }
 
   async function handleNext() {

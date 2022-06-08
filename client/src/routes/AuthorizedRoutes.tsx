@@ -3,7 +3,7 @@ import { Route as PageRouter, Switch, useHistory } from 'react-router-dom';
 
 import { Route } from '../enums';
 import { useAuth } from '../hooks';
-import { Home, PageNotFound, AnimalsTable, PlantsTable } from '../pages';
+import { Home, PageNotFound, AnimalsTable, PlantsTable, CreateRecordView } from '../pages';
 
 export default function AuthorizedRoutes() {
   const { auth } = useAuth();
@@ -32,6 +32,7 @@ export default function AuthorizedRoutes() {
       <PageRouter exact component={Home} path={Route.ANIMALS_DELETE} />
       <PageRouter exact component={Home} path={Route.ANIMALS_EDIT} />
       <PageRouter exact component={Home} path={Route.ANIMALS_VIEW} />
+      <PageRouter exact component={CreateRecordView} path={Route.CREATE} />
       <PageRouter component={PageNotFound} />
     </Switch>
   );

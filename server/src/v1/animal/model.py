@@ -9,10 +9,9 @@ class AnimalModel():
             if not isinstance(animal, dict):
                 continue
             if not (
-                'id' in animal and
                 'name' in animal and
                 'scientific_name' in animal and
-                'filename' in animal and
+                'date_updated' in animal and
                 'count' in animal
                 ):
                 continue
@@ -28,21 +27,24 @@ class AnimalModel():
         queries = []
         for animal in clean_animals:
             sql = "INSERT INTO animals(" + \
+                "id, " + \
                 "name, " + \
                 "scientific_name, " + \
+                "date_updated, " + \
                 "filename, " + \
-                "count, " + \
-                "date_updated" + \
-                ") VALUES(%s, %s, %s, %s, TO_DATE('%s', 'YYYY-MM-DD'))"
+                "count" + \
+                ") VALUES(%s, %s, %s, %s, %s)"
             queries.append({"sql": sql, "bind": (
+                animal['id'],
                 animal['name'],
                 animal['scientific_name'],
+                animal['date_updated'],
                 animal['filename'],
                 animal['count'],
-                animal['date_updated'],
             )})
         db = Db.get_instance()
         result = db.transactional(queries)
+        print(result)
         return animals
 
     def read(self, filters=None, count_only=False):

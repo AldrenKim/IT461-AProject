@@ -4,5 +4,6 @@ import PageNotFound from './PageNotFound';
 
 export * from './Plants';
 export * from './Animals';
+export * from './CreateRecord';
 
 export { Home, Login, PageNotFound };
