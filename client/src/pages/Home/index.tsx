@@ -58,6 +58,10 @@ export default function Home() {
     history.push(Route.PLANTS);
   }
 
+  async function handleGoToAnimals() {
+    history.push(Route.ANIMALS);
+  }
+
   return (
     <Layout>
       <div className="App">
@@ -77,6 +81,9 @@ export default function Home() {
           <button onClick={show}>show</button>
           <Button size="large" type="dashed" onClick={handleGoToPlants}>
             Plants
+          </Button>
+          <Button size="large" type="dashed" onClick={handleGoToAnimals}>
+            Animals
           </Button>
           <Button size="large" onClick={logout}>
             Logout
