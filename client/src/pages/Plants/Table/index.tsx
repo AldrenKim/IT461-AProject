@@ -39,7 +39,6 @@ export default function PlantsTable() {
 
   async function handleNext() {
     const fetchedData = await getPlants(axios, next || '');
-    console.log(fetchedData);
 
     setPlants(fetchedData.data);
     setNext(fetchedData.metadata.links.next);
