@@ -1,13 +1,9 @@
-import { Button, Typography } from 'antd';
+import { Button, Result } from 'antd';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Route } from '../../enums';
 import { useAuth } from '../../hooks';
-
-const { Title } = Typography;
-
-import * as S from './styles';
 
 export default function PageNotFound() {
   const history = useHistory();
@@ -18,11 +14,15 @@ export default function PageNotFound() {
   }
 
   return (
-    <S.Container>
-      <S.Content>
-        <Title>Page Not Found</Title>
-        <Button onClick={handleGoHome}>Go Home</Button>
-      </S.Content>
-    </S.Container>
+    <Result
+      extra={
+        <Button type="primary" onClick={handleGoHome}>
+          Back Home
+        </Button>
+      }
+      status="404"
+      subTitle="Sorry, the page you visited does not exist."
+      title="404"
+    />
   );
 }
