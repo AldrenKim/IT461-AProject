@@ -50,8 +50,8 @@ export default function Home() {
   };
 
   async function show() {
-    const blob = await getFile(axios, 'leaf.obj');
-    downloadBlob(blob, 'leaf.obj');
+    const blob = await getFile(axios, 'tobacco.obj');
+    downloadBlob(blob, 'tobacco.obj');
   }
 
   async function handleGoToPlants() {

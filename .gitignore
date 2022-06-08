@@ -4,4 +4,4 @@ __pycache__/
 mysql-data/
 
 server/src/objects/*
-!server/src/objects/leaf.obj
+!server/src/objects/tobacco.obj
