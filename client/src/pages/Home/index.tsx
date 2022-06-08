@@ -62,10 +62,6 @@ export default function Home() {
     history.push(Route.ANIMALS);
   }
 
-  async function handleGoToTestDelete() {
-    history.push(Route.TESTDELETE);
-  }
-
   return (
     <Layout>
       <div className="App">
@@ -86,13 +82,9 @@ export default function Home() {
           <Button size="large" type="dashed" onClick={handleGoToPlants}>
             Plants
           </Button>
-<<<<<<< HEAD
           <Button size="large" type="dashed" onClick={handleGoToAnimals}>
             Animals
           </Button>
-          <Button onClick={handleGoToTestDelete}>Delete Test</Button>
-=======
->>>>>>> origin/main
           <Button size="large" onClick={logout}>
             Logout
           </Button>

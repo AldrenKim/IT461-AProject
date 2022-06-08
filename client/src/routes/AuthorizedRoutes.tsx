@@ -3,9 +3,6 @@ import { Route as PageRouter, Switch, useHistory } from 'react-router-dom';
 
 import { Route } from '../enums';
 import { useAuth } from '../hooks';
-<<<<<<< HEAD
-import { Home, PageNotFound, AnimalsTable, PlantsTable, AnimalDelete } from '../pages';
-=======
 import {
   AnimalsTable,
   Home,
@@ -13,8 +10,9 @@ import {
   PlantsTable,
   PlantView,
   CreateRecordView,
+  AnimalDelete,
+  PlantDelete,
 } from '../pages';
->>>>>>> origin/main
 
 export default function AuthorizedRoutes() {
   const { auth } = useAuth();
@@ -36,18 +34,14 @@ export default function AuthorizedRoutes() {
     <Switch>
       <PageRouter exact component={Home} path={Route.HOME} />
       <PageRouter exact component={PlantsTable} path={Route.PLANTS} />
-      <PageRouter exact component={Home} path={Route.PLANTS_DELETE} />
+      <PageRouter exact component={PlantDelete} path={Route.PLANTS_DELETE} />
       <PageRouter exact component={Home} path={Route.PLANTS_EDIT} />
       <PageRouter exact component={PlantView} path={Route.PLANTS_VIEW} />
       <PageRouter exact component={AnimalsTable} path={Route.ANIMALS} />
       <PageRouter exact component={AnimalDelete} path={Route.ANIMALS_DELETE} />
       <PageRouter exact component={Home} path={Route.ANIMALS_EDIT} />
       <PageRouter exact component={Home} path={Route.ANIMALS_VIEW} />
-<<<<<<< HEAD
-      <PageRouter exact component={AnimalDelete} path={Route.TESTDELETE} />
-=======
       <PageRouter exact component={CreateRecordView} path={Route.CREATE} />
->>>>>>> origin/main
       <PageRouter component={PageNotFound} />
     </Switch>
   );

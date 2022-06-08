@@ -10,11 +10,7 @@ enum Route {
   PLANTS_EDIT = '/plants/edit/:id',
   PLANTS_DELETE = '/plants/delete/:id',
   USERS = '/users',
-<<<<<<< HEAD
-  TESTDELETE = '/deletetest',
-=======
   CREATE = '/create/:id',
->>>>>>> origin/main
 }
 
 export default Route;
