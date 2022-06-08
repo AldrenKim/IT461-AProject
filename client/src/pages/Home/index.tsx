@@ -50,8 +50,8 @@ export default function Home() {
   };
 
   async function show() {
-    const blob = await getFile(axios, 'leaf.obj');
-    downloadBlob(blob);
+    const blob = await getFile(axios, 'tobacco.obj');
+    downloadBlob(blob, 'tobacco.obj');
   }
 
   async function handleGoToPlants() {
@@ -86,10 +86,13 @@ export default function Home() {
           <Button size="large" type="dashed" onClick={handleGoToPlants}>
             Plants
           </Button>
+<<<<<<< HEAD
           <Button size="large" type="dashed" onClick={handleGoToAnimals}>
             Animals
           </Button>
           <Button onClick={handleGoToTestDelete}>Delete Test</Button>
+=======
+>>>>>>> origin/main
           <Button size="large" onClick={logout}>
             Logout
           </Button>
