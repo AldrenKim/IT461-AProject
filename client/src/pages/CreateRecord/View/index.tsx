@@ -3,7 +3,7 @@ import { Button, Layout, Menu, MenuProps, Form, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-import { addAnimals } from '../../../api/AnimalApi';
+import { addAnimal } from '../../../api/AnimalApi';
 
 import { useAxios } from '../../../hooks';
 
@@ -44,7 +44,7 @@ export default function View() {
   };
 
   const onFinish = async (values: any) => {
-    const fetchedData = await addAnimals(axios, values);
+    const fetchedData = await addAnimal(axios, values);
     console.log(fetchedData);
   };
 
