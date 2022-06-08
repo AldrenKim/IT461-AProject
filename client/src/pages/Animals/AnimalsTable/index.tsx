@@ -33,7 +33,8 @@ export default function AnimalsTable() {
   }
 
   function handelAddNewItem() {
-    history.push(Route.HOME);
+    const test = 'Animals';
+    history.push(Route.CREATE.replace(':id', test));
   }
 
   async function handleNext() {
