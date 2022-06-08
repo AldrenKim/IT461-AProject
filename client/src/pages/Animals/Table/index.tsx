@@ -3,10 +3,9 @@ import { ColumnsType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { getAnimals } from '../../../api/AnimalApi';
+import { getAnimals } from '../../../api';
 import { Route } from '../../../enums';
 import { useAxios } from '../../../hooks';
-
 import { Animal } from '../../../types';
 
 export default function AnimalsTable() {

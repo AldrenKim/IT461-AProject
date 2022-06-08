@@ -1,3 +1,4 @@
 import PlantsTable from './Table';
+import PlantView from './View';
 
-export { PlantsTable };
+export { PlantsTable, PlantView };
