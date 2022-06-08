@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+.center {
+margin: auto;
+width: 60%;
+padding: 10px;
+}
+
+.login-head, .login-sub-head{
+    font-family: 'Inter', sans-serif;
+    font-size: 60px;
+    margin:auto;
+}
+.login-sub-head{
+    font-size: 12px;
+}
