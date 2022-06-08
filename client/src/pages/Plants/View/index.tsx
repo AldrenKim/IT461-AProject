@@ -1,65 +1,37 @@
-import { Button, Table } from 'antd';
-import { ColumnsType } from 'antd/lib/table';
+import { Row } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import { getPlants } from '../../../api/PlantApi';
+import { getFile, getPlant } from '../../../api';
+// import { ThreeDViewer } from '../../../components';
 import { useAxios } from '../../../hooks';
-
 import { Plant } from '../../../types';
 
-const COLUMNS: ColumnsType<Plant> = [
-  {
-    dataIndex: 'id',
-    key: 'id',
-    title: 'Id',
-  },
-  {
-    dataIndex: 'name',
-    key: 'name',
-    title: 'Name',
-  },
-  {
-    dataIndex: 'scientific_name',
-    key: 'scientific_name',
-    title: 'Scientific Name',
-  },
-  {
-    dataIndex: 'area',
-    key: 'area',
-    title: 'Area',
-  },
-  {
-    dataIndex: 'date_updated',
-    key: 'date_updated',
-    title: 'Date Last Updated',
-  },
-];
-
-export default function View() {
+export default function PlantView() {
+  const { id } = useParams<{ id: string }>();
   const { axios } = useAxios();
-  const history = useHistory();
-  const [plants, setPlants] = useState<Plant[]>([]);
+  const [plant, setPlant] = useState<Plant>();
+  const [object, setObject] = useState<Blob>();
 
   useEffect(() => {
     async function mount() {
-      const fetchedData = await getPlants(axios);
+      const fetchedPlant = await getPlant(axios, id);
+      setPlant(fetchedPlant);
 
-      setPlants(fetchedData.data);
+      if (fetchedPlant.filename) {
+        const blob = await getFile(axios, fetchedPlant.filename);
+        setObject(blob);
+      }
     }
 
     mount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleGoBack() {
-    history.goBack();
-  }
-
   return (
-    <>
-      <Button onClick={handleGoBack}>Back</Button>
-      <Table columns={COLUMNS} dataSource={plants} />
-    </>
+    <Row>
+      <div style={{ height: '100vh', width: '70vw' }}>{/* <ThreeDViewer obj={object} /> */}</div>
+      <div>{plant?.name}</div>
+    </Row>
   );
 }

@@ -8,5 +8,8 @@
   "files.insertFinalNewline": true,
   "eslint.workingDirectories": [{ "mode": "auto" }],
   "editor.formatOnSave": true,
-  "diffEditor.codeLens": true
+  "diffEditor.codeLens": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

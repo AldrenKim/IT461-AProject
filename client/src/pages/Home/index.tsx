@@ -52,11 +52,15 @@ export default function Home() {
 
   async function show() {
     const blob = await getFile(axios, 'leaf.obj');
-    downloadBlob(blob);
+    downloadBlob(blob, 'leaf.obj');
   }
 
   async function handleGoToPlants() {
     history.push(Route.PLANTS);
+  }
+
+  async function handleGoToAnimals() {
+    history.push(Route.ANIMALS);
   }
 
   return (
