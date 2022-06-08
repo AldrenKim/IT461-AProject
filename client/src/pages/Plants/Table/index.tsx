@@ -3,10 +3,9 @@ import { ColumnsType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { getPlants } from '../../../api/PlantApi';
+import { getPlants } from '../../../api';
 import { Route } from '../../../enums';
 import { useAxios } from '../../../hooks';
-
 import { Plant } from '../../../types';
 
 export default function PlantsTable() {

@@ -51,7 +51,7 @@ export default function Home() {
 
   async function show() {
     const blob = await getFile(axios, 'leaf.obj');
-    downloadBlob(blob);
+    downloadBlob(blob, 'leaf.obj');
   }
 
   async function handleGoToPlants() {
