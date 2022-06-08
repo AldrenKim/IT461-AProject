@@ -36,7 +36,7 @@ export default function ThreeDViewer(props: Props) {
       ) : (
         <>
           <Torus>
-            <meshBasicMaterial color="green" />
+            <meshMatcapMaterial color="green" />
           </Torus>
         </>
       ),
