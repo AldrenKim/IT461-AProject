@@ -1,3 +1,3 @@
-import AnimalView from './View';
+import AnimalsTable from './Table';
 
-export { AnimalView };
+export { AnimalsTable };
