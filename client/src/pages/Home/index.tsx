@@ -1,13 +1,12 @@
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Layout, Space, message } from 'antd';
+import { Button, Layout, message } from 'antd';
 import Upload, { UploadProps } from 'antd/lib/upload/Upload';
 import { RcFile, UploadFile } from 'antd/lib/upload/interface';
 import React, { useContext, useState } from 'react';
-import './home.css';
+
 import { useHistory } from 'react-router-dom';
 
 import { getFile, uploadFile } from '../../api';
-import background from '../../assets/bg.png';
 import { AuthContext } from '../../contexts';
 import { Route } from '../../enums';
 import { useAxios } from '../../hooks';
@@ -65,69 +64,41 @@ export default function Home() {
 
   return (
     <Layout>
-      <div style={{ backgroundImage: `url(${background})`, height: '100vh' }}>
-        {/* <button onClick={show}>show</button> */}
-        <div className="home-center">
-          <Space align="center" direction="vertical" size="middle">
-            <Button
-              size="large"
-              style={{
-                backgroundColor: '#A6E3A1',
-                fontSize: '32px',
-                height: 'auto',
-                margin: 'auto',
-                paddingLeft: '2rem',
-                paddingRight: '2rem',
-              }}
-              type="dashed"
-              onClick={handleGoToPlants}
-            >
-              View Animals
-            </Button>
-            <Button
-              size="large"
-              style={{
-                backgroundColor: '#A6E3A1',
-                fontSize: '32px',
-                height: 'auto',
-                margin: '2rem',
-                paddingLeft: '2rem',
-                paddingRight: '2rem',
-              }}
-              type="dashed"
-              onClick={handleGoToPlants}
-            >
-              View Plants
-            </Button>
-            <Button
-              size="large"
-              style={{
-                backgroundColor: '#A6E3A1',
-                fontSize: '32px',
-                height: 'auto',
-                margin: 'auto',
-                paddingLeft: '2rem',
-                paddingRight: '2rem',
-              }}
-              onClick={logout}
-            >
-              Logout
-            </Button>
-            {/* <h1>File Upload</h1>
-                <Upload {...props}>
-                <Button icon={<UploadOutlined />}>Select File</Button>
-                </Upload>
-                <Button
-                  disabled={fileList.length === 0}
-                  loading={uploading}
-                  style={{ marginTop: 16 }}
-                  type="primary"
-                  onClick={handleUpload}
-                >
-                  {uploading ? 'Uploading' : 'Start Upload'}
-                </Button> */}
-          </Space>
-        </div>
+      <div className="App">
+        <header className="App-header">
+          <img alt="logo" className="App-logo" src={logo} />
+          <p>
+            Edit <code>src/App.tsx</code> and save to reload.
+          </p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Learn React
+          </a>
+          <button onClick={show}>show</button>
+          <Button size="large" type="dashed" onClick={handleGoToPlants}>
+            Plants
+          </Button>
+          <Button size="large" onClick={logout}>
+            Logout
+          </Button>
+        </header>
+        <h1>File Upload</h1>
+        <Upload {...props}>
+          <Button icon={<UploadOutlined />}>Select File</Button>
+        </Upload>
+        <Button
+          disabled={fileList.length === 0}
+          loading={uploading}
+          style={{ marginTop: 16 }}
+          type="primary"
+          onClick={handleUpload}
+        >
+          {uploading ? 'Uploading' : 'Start Upload'}
+        </Button>
       </div>
     </Layout>
   );
