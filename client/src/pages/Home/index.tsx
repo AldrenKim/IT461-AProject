@@ -82,6 +82,9 @@ export default function Home() {
           <Button size="large" type="dashed" onClick={handleGoToPlants}>
             Plants
           </Button>
+          <Button size="large" type="dashed" onClick={handleGoToAnimals}>
+            Animals
+          </Button>
           <Button size="large" onClick={logout}>
             Logout
           </Button>
