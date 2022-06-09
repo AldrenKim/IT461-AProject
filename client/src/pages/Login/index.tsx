@@ -4,7 +4,6 @@ import { Button, Layout, Row, Col, Form, Input } from 'antd';
 import React, { useContext } from 'react';
 
 import background from '../../assets/bg.png';
-import './login.css';
 import { AuthContext } from '../../contexts';
 
 const { Header, Footer, Sider, Content } = Layout;

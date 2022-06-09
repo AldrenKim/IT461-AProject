@@ -8,3 +8,41 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.center {
+margin: auto;
+width: 60%;
+padding: 10px;
+}
+
+.login-head, .login-sub-head{
+    font-family: 'Inter', sans-serif;
+    font-size: 60px;
+    margin:auto;
+}
+.login-sub-head{
+    font-size: 12px;
+}
+
+.home-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.ant-table-thead > tr >th{
+    color: #000000;
+    background: #A6E3A1 !important;
+}
+
+ 
+.ant-table{
+    color: #000000;
+    background: #FCF6E4 !important;
+}
+
+.ant-table-tbody > tr.ant-table-placeholder:hover > td {
+  background: #FCF6E4 !important;
+}
