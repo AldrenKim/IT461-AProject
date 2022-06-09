@@ -3,7 +3,6 @@ import { Button, Layout, Space, message } from 'antd';
 import Upload, { UploadProps } from 'antd/lib/upload/Upload';
 import { RcFile, UploadFile } from 'antd/lib/upload/interface';
 import React, { useContext, useState } from 'react';
-import './home.css';
 import { useHistory } from 'react-router-dom';
 
 import { getFile, uploadFile } from '../../api';
@@ -49,11 +48,6 @@ export default function Home() {
       setFileList(newFileList);
     },
   };
-
-  async function show() {
-    const blob = await getFile(axios, 'leaf.obj');
-    downloadBlob(blob, 'leaf.obj');
-  }
 
   async function handleGoToPlants() {
     history.push(Route.PLANTS);
