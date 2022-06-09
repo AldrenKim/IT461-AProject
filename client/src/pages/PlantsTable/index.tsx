@@ -3,23 +3,23 @@ import { ColumnsType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { getAnimals } from '../../../api';
-import { Route } from '../../../enums';
-import { useAxios } from '../../../hooks';
-import { Animal } from '../../../types';
+import { getPlants } from '../../api';
+import { Route } from '../../enums';
+import { useAxios } from '../../hooks';
+import { Plant } from '../../types';
 
-export default function AnimalsTable() {
+export default function PlantsTable() {
   const { axios } = useAxios();
   const history = useHistory();
-  const [animals, setAnimals] = useState<Animal[]>([]);
+  const [plants, setPlants] = useState<Plant[]>([]);
   const [next, setNext] = useState<string | null>(null);
   const [prev, setPrev] = useState<string | null>(null);
 
   useEffect(() => {
     async function mount() {
-      const fetchedData = await getAnimals(axios);
+      const fetchedData = await getPlants(axios);
 
-      setAnimals(fetchedData.data);
+      setPlants(fetchedData.data);
       setNext(fetchedData.metadata.links.next);
       setPrev(fetchedData.metadata.links.prev);
     }
@@ -33,27 +33,26 @@ export default function AnimalsTable() {
   }
 
   function handelAddNewItem() {
-    const test = 'Animals';
-    history.push(Route.CREATE.replace(':id', test));
+    history.push(Route.CREATE.replace(':id', 'Plants'));
   }
 
   async function handleNext() {
-    const fetchedData = await getAnimals(axios, next || '');
+    const fetchedData = await getPlants(axios, next || '');
 
-    setAnimals(fetchedData.data);
+    setPlants(fetchedData.data);
     setNext(fetchedData.metadata.links.next);
     setPrev(fetchedData.metadata.links.prev);
   }
 
   async function handlePrev() {
-    const fetchedData = await getAnimals(axios, prev || '');
+    const fetchedData = await getPlants(axios, prev || '');
 
-    setAnimals(fetchedData.data);
+    setPlants(fetchedData.data);
     setNext(fetchedData.metadata.links.next);
     setPrev(fetchedData.metadata.links.prev);
   }
 
-  const COLUMNS: ColumnsType<Animal> = [
+  const COLUMNS: ColumnsType<Plant> = [
     {
       dataIndex: 'id',
       key: 'id',
@@ -70,9 +69,9 @@ export default function AnimalsTable() {
       title: 'Scientific Name',
     },
     {
-      dataIndex: 'count',
-      key: 'count',
-      title: 'Count',
+      dataIndex: 'area',
+      key: 'area',
+      title: 'Area',
     },
     {
       dataIndex: 'date_updated',
@@ -83,15 +82,15 @@ export default function AnimalsTable() {
       key: 'action',
       render: (_, record) => {
         function handleView() {
-          history.push(Route.ANIMALS_VIEW.replace(':id', record.id));
+          history.push(Route.PLANTS_VIEW.replace(':id', record.id));
         }
 
         function handleEdit() {
-          history.push(Route.ANIMALS_EDIT.replace(':id', record.id));
+          history.push(Route.PLANTS_EDIT.replace(':id', record.id));
         }
 
         function handleDelete() {
-          history.push(Route.ANIMALS_DELETE.replace(':id', record.id));
+          history.push(Route.PLANTS_DELETE.replace(':id', record.id));
         }
 
         return (
@@ -118,7 +117,7 @@ export default function AnimalsTable() {
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button onClick={handelAddNewItem}>Add New Item</Button>
       </div>
-      <Table columns={COLUMNS} dataSource={animals} pagination={false} rowKey="name" />
+      <Table columns={COLUMNS} dataSource={plants} pagination={false} rowKey="name" />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Space size="large">
           <Button disabled={!prev} onClick={handlePrev}>

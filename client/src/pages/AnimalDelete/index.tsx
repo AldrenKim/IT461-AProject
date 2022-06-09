@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-import { deleteAnimal } from '../../../api/AnimalApi';
-import { Route } from '../../../enums';
-import { useAxios } from '../../../hooks';
+import { deleteAnimal } from '../../api/AnimalApi';
+import { Route } from '../../enums';
+import { useAxios } from '../../hooks';
 
 export default function AnimalDelete() {
   const { axios } = useAxios();
