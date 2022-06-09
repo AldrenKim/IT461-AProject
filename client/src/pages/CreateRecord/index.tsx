@@ -1,13 +1,18 @@
-import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Button, Layout, Menu, MenuProps, Form, Input, Space, message } from 'antd';
+import { ArrowLeftOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Layout, Form, Input, Space, message, UploadProps, Upload } from 'antd';
+import { UploadFile, RcFile } from 'antd/lib/upload/interface';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+
+import { uploadFile } from '../../api';
 
 import { addAnimal } from '../../api/AnimalApi';
 import { addPlant } from '../../api/PlantApi';
 import background from '../../assets/bg.png';
 import { useAxios } from '../../hooks';
+
 const { Content } = Layout;
+
 export default function View() {
   const { axios } = useAxios();
   const history = useHistory();
@@ -15,8 +20,25 @@ export default function View() {
   const [typeOfItem, setTypeOfItem] = useState('');
   const [dateToday, setDateToday] = useState('');
   const [numberQuery, setNumberQuery] = useState('');
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
   const [form] = Form.useForm();
   const timeOutTms = 500;
+
+  const props: UploadProps = {
+    beforeUpload: (file) => {
+      setFileList([...fileList, file]);
+
+      return false;
+    },
+    fileList,
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+  };
 
   const DateToday = () => {
     const today = new Date();
@@ -55,18 +77,35 @@ export default function View() {
   }
 
   const onFinish = async (values: any) => {
-    let fetchedData;
-    if (typeOfItem === 'Animals') {
-      fetchedData = await addAnimal(axios, values);
-    } else {
-      fetchedData = await addPlant(axios, values);
-    }
-    if (fetchedData) {
+    setIsSaving(true);
+    let filename = null;
+
+    try {
+      if (fileList[0]) {
+        await uploadFile(axios, fileList[0] as RcFile);
+        filename = fileList[0].name;
+      }
+
+      if (typeOfItem === 'Animals') {
+        await addAnimal(axios, { ...values, filename });
+      } else {
+        await addPlant(axios, { ...values, filename });
+      }
+
       message.success({
         content: `Successfully added ${typeOfItem}!`,
         duration: 1,
         onClose: returnTables,
       });
+      setFileList([]);
+    } catch (err: any) {
+      if (err?.message.includes('400')) {
+        message.error('Ensure file format is .obj');
+      } else {
+        message.error(err?.message);
+      }
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -141,8 +180,10 @@ export default function View() {
               >
                 <Input disabled={true} />
               </Form.Item>
-              <Form.Item label="Filename" name="filename">
-                <Input />
+              <Form.Item label="3d .obj File" name="filename">
+                <Upload {...props}>
+                  <Button icon={<UploadOutlined />}>Select File</Button>
+                </Upload>
               </Form.Item>
               {typeOfItem === 'Animals' ? (
                 <Form.Item label="Count" name="count" rules={[{ required: true }]}>
@@ -165,11 +206,15 @@ export default function View() {
               )}
               <Form.Item className="buttons">
                 <Space>
-                  <Button htmlType="submit" style={{ backgroundColor: '#A6E3A1' }}>
-                    Submit
+                  <Button
+                    disabled={isSaving}
+                    htmlType="submit"
+                    style={{ backgroundColor: '#A6E3A1' }}
+                  >
+                    {isSaving ? 'Submitting' : 'Submit'}
                   </Button>
 
-                  <Button htmlType="button" onClick={onReset}>
+                  <Button disabled={isSaving} htmlType="button" onClick={onReset}>
                     Reset
                   </Button>
                 </Space>
