@@ -27,7 +27,6 @@ class AnimalModel():
         queries = []
         for animal in clean_animals:
             sql = "INSERT INTO animals(" + \
-                "id, " + \
                 "name, " + \
                 "scientific_name, " + \
                 "date_updated, " + \
@@ -35,7 +34,6 @@ class AnimalModel():
                 "count" + \
                 ") VALUES(%s, %s, %s, %s, %s)"
             queries.append({"sql": sql, "bind": (
-                animal['id'],
                 animal['name'],
                 animal['scientific_name'],
                 animal['date_updated'],
@@ -44,7 +42,6 @@ class AnimalModel():
             )})
         db = Db.get_instance()
         result = db.transactional(queries)
-        print(result)
         return animals
 
     def read(self, filters=None, count_only=False):

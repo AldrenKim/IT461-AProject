@@ -9,10 +9,9 @@ class PlantModel():
             if not isinstance(plant, dict):
                 continue
             if not (
-                'id' in plant and
                 'name' in plant and
                 'scientific_name' in plant and
-                'filename' in plant and
+                'date_updated' in plant and
                 'area' in plant
                 ):
                 continue
@@ -33,7 +32,7 @@ class PlantModel():
                 "filename, " + \
                 "area, " + \
                 "date_updated" + \
-                ") VALUES(%s, %s, %s, %s, TO_DATE('%s', 'YYYY-MM-DD'))"
+                ") VALUES(%s, %s, %s, %s, %s)"
             queries.append({"sql": sql, "bind": (
                 plant['name'],
                 plant['scientific_name'],

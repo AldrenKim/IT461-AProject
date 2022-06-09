@@ -1,13 +1,15 @@
 import { CaretLeftOutlined } from '@ant-design/icons';
-import { Button, Layout, Menu, MenuProps, Form, Input } from 'antd';
+import { Button, Layout, Menu, MenuProps, Form, Input, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { addAnimal } from '../../../api/AnimalApi';
+import { addPlant } from '../../../api/PlantApi';
 
 import { useAxios } from '../../../hooks';
+import './view.css';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 const menuItems = [
   {
     icon: <CaretLeftOutlined />,
@@ -44,7 +46,12 @@ export default function View() {
   };
 
   const onFinish = async (values: any) => {
-    const fetchedData = await addAnimal(axios, values);
+    let fetchedData;
+    if (typeOfItem === 'Animals') {
+      fetchedData = await addAnimal(axios, values);
+    } else {
+      fetchedData = await addPlant(axios, values);
+    }
     console.log(fetchedData);
   };
 
@@ -52,26 +59,29 @@ export default function View() {
     form.resetFields();
   };
 
-  const onFinishFailed = (values: any) => {
-    console.log('Click failed', values);
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed', errorInfo);
   };
 
   return (
     <>
-      <Layout>
+      <Layout style={{ height: '100vh' }}>
         <Header>
           <Menu items={menuItems} mode="horizontal" theme="dark" onClick={onClick}></Menu>
         </Header>
-        <Content style={{ height: '100%' }}>
-          <div>
+        <Content>
+          <div className="form-container">
+            <h2 className="form-name">Create {typeOfItem === 'Animals' ? 'Animal' : 'Plant'}</h2>
             <Form
               autoComplete="off"
+              className="form-verticalCenter"
               form={form}
               initialValues={{ remember: true }}
-              labelCol={{ span: 12 }}
+              labelAlign="right"
+              labelCol={{ offset: 2, span: 6 }}
               name="AddItem"
               size="middle"
-              wrapperCol={{ span: 20 }}
+              wrapperCol={{ offset: 1, span: 8 }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
             >
@@ -118,13 +128,16 @@ export default function View() {
                   <Input />
                 </Form.Item>
               )}
-              <Form.Item>
-                <Button htmlType="submit" type="primary">
-                  Submit
-                </Button>
-                <Button htmlType="button" onClick={onReset}>
-                  Reset
-                </Button>
+              <Form.Item className="buttons">
+                <Space>
+                  <Button htmlType="submit" type="primary">
+                    Submit
+                  </Button>
+
+                  <Button htmlType="button" onClick={onReset}>
+                    Reset
+                  </Button>
+                </Space>
               </Form.Item>
             </Form>
           </div>
