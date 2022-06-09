@@ -1,5 +1,6 @@
 import AnimalDelete from './AnimalDelete';
 import AnimalsTable from './AnimalsTable';
+import CreateRecord from './CreateRecord';
 import Home from './Home';
 import Login from './Login';
 import PageNotFound from './PageNotFound';
@@ -7,11 +8,10 @@ import PlantDelete from './PlantDelete';
 import PlantView from './PlantView';
 import PlantsTable from './PlantsTable';
 
-export * from './CreateRecord';
-
 export {
   AnimalDelete,
   AnimalsTable,
+  CreateRecord,
   Home,
   Login,
   PageNotFound,
