@@ -61,7 +61,6 @@ export default function View() {
       duration: 1,
       onClose: returnTables,
     });
-    console.log(fetchedData);
   };
 
   const onReset = () => {
@@ -69,7 +68,10 @@ export default function View() {
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed', errorInfo);
+    message.error({
+      content: 'Failed to add. There are items in your request that are invalid.',
+      duration: 1.5,
+    });
   };
 
   return (
