@@ -1,5 +1,5 @@
 import { CaretLeftOutlined } from '@ant-design/icons';
-import { Button, Layout, Menu, MenuProps, Form, Input, Space, message, InputNumber } from 'antd';
+import { Button, Layout, Menu, MenuProps, Form, Input, Space, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
