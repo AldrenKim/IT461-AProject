@@ -7,8 +7,6 @@ import PlantDelete from './PlantDelete';
 import PlantView from './PlantView';
 import PlantsTable from './PlantsTable';
 
-export * from './AnimalDelete';
-export * from './PlantDelete';
 export * from './CreateRecord';
 
 export {
