@@ -31,8 +31,8 @@ export default function Login() {
             <Col className="center" span={12}>
               <div style={{ marginLeft: '3em' }}>
                 <div style={{ paddingBottom: '2.5em' }}>
-                  <p className="login-head">Login</p>
-                  <p className="login-sub-head">
+                  <p className="head">Login</p>
+                  <p className="sub-head login-sub-head">
                     Welcome to the Parm. Please enter your credentials below
                   </p>
                 </div>
