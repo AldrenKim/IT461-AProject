@@ -1,5 +1,5 @@
 import { CaretLeftOutlined } from '@ant-design/icons';
-import { Button, Layout, Menu, MenuProps, Form, Input, Space, message } from 'antd';
+import { Button, Layout, Menu, MenuProps, Form, Input, Space, message, InputNumber } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ import { addAnimal } from '../../api/AnimalApi';
 import { addPlant } from '../../api/PlantApi';
 
 import { useAxios } from '../../hooks';
-import './view.css';
+import './index.css';
 
 const { Header, Content } = Layout;
 const menuItems = [
@@ -18,13 +18,15 @@ const menuItems = [
   },
 ];
 
-export default function View() {
+export default function CreateRecord() {
   const { axios } = useAxios();
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
   const [typeOfItem, setTypeOfItem] = useState('');
   const [dateToday, setDateToday] = useState('');
+  const [numberQuery, setNumberQuery] = useState('');
   const [form] = Form.useForm();
+  const timeOutTms = 500;
 
   const DateToday = () => {
     const today = new Date();
@@ -32,14 +34,27 @@ export default function View() {
     setDateToday(date);
   };
 
+  function checkNumber(val: string) {
+    const re = /^[0-9.\b]+$/;
+    if (val !== '' && !re.test(val)) {
+      message.error({
+        content: 'Invalid input. Must be integer.',
+        duration: 2,
+      });
+    }
+  }
+
   const loadDefault = () => {
     form.setFieldsValue({ date_updated: dateToday });
   };
 
   useEffect(() => {
+    const timeOutId = setTimeout(() => checkNumber(numberQuery), timeOutTms);
     setTypeOfItem(id);
     DateToday();
-  }, []);
+
+    return () => clearTimeout(timeOutId);
+  }, [id, numberQuery]);
 
   const onClick: MenuProps['onClick'] = () => {
     history.goBack();
@@ -56,11 +71,13 @@ export default function View() {
     } else {
       fetchedData = await addPlant(axios, values);
     }
-    message.success({
-      content: `Successfully added ${typeOfItem}!`,
-      duration: 1,
-      onClose: returnTables,
-    });
+    if (fetchedData) {
+      message.success({
+        content: `Successfully added ${typeOfItem}!`,
+        duration: 1,
+        onClose: returnTables,
+      });
+    }
   };
 
   const onReset = () => {
@@ -69,7 +86,7 @@ export default function View() {
 
   const onFinishFailed = (errorInfo: any) => {
     message.error({
-      content: 'Failed to add. There are items in your request that are invalid.',
+      content: `Failed to add. There are items in your request that are invalid. ${errorInfo}`,
       duration: 1.5,
     });
   };
@@ -96,9 +113,6 @@ export default function View() {
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
             >
-              <Form.Item label="ID" name="id">
-                <Input />
-              </Form.Item>
               <Form.Item label="Name" name="name" rules={[{ required: true }]}>
                 <Input />
               </Form.Item>
@@ -121,22 +135,22 @@ export default function View() {
                 <Input />
               </Form.Item>
               {typeOfItem === 'Animals' ? (
-                <Form.Item
-                  label="Count"
-                  name="count"
-                  rules={typeOfItem === 'Animals' ? [{ required: true }] : [{}]}
-                  style={typeOfItem !== 'Animals' ? { display: 'none' } : {}}
-                >
-                  <Input />
+                <Form.Item label="Count" name="count" rules={[{ required: true }]}>
+                  <Input
+                    onChange={(e) => {
+                      setNumberQuery(e.currentTarget.value);
+                    }}
+                  />
                 </Form.Item>
               ) : (
-                <Form.Item
-                  label="Area"
-                  name="area"
-                  rules={typeOfItem === 'Plants' ? [{ required: true }] : [{}]}
-                  style={typeOfItem !== 'Plants' ? { display: 'none' } : {}}
-                >
-                  <Input />
+                <Form.Item label="Area" name="area" rules={[{ required: true }]}>
+                  <Input
+                    min="1"
+                    style={{ width: '100%' }}
+                    onChange={(e) => {
+                      setNumberQuery(e.currentTarget.value);
+                    }}
+                  />
                 </Form.Item>
               )}
               <Form.Item className="buttons">
