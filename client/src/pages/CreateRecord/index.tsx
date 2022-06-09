@@ -1,24 +1,14 @@
-import { CaretLeftOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Button, Layout, Menu, MenuProps, Form, Input, Space, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { addAnimal } from '../../api/AnimalApi';
 import { addPlant } from '../../api/PlantApi';
-
+import background from '../../assets/bg.png';
 import { useAxios } from '../../hooks';
-import './index.css';
-
-const { Header, Content } = Layout;
-const menuItems = [
-  {
-    icon: <CaretLeftOutlined />,
-    key: 'Back',
-    label: 'Back',
-  },
-];
-
-export default function CreateRecord() {
+const { Content } = Layout;
+export default function View() {
   const { axios } = useAxios();
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
@@ -56,9 +46,9 @@ export default function CreateRecord() {
     return () => clearTimeout(timeOutId);
   }, [id, numberQuery]);
 
-  const onClick: MenuProps['onClick'] = () => {
+  function handleGoBack() {
     history.goBack();
-  };
+  }
 
   function returnTables() {
     history.goBack();
@@ -93,23 +83,43 @@ export default function CreateRecord() {
 
   return (
     <>
-      <Layout style={{ height: '100vh' }}>
-        <Header>
-          <Menu items={menuItems} mode="horizontal" theme="dark" onClick={onClick}></Menu>
-        </Header>
+      <div style={{ backgroundImage: `url(${background})`, height: '100vh' }}>
+        <Button
+          icon={<ArrowLeftOutlined />}
+          style={{
+            backgroundColor: '#A6E3A1',
+            fontWeight: 'bold',
+            margin: '2em 1em 0 1em',
+          }}
+          onClick={handleGoBack}
+        >
+          Back
+        </Button>
         <Content>
-          <div className="form-container">
-            <h2 className="form-name">Create {typeOfItem === 'Animals' ? 'Animal' : 'Plant'}</h2>
+          <div
+            className="center"
+            style={{ background: '#FCF6E4', borderRadius: '10%', marginTop: '3rem', width: '40%' }}
+          >
+            <h2
+              style={{
+                fontSize: '24px',
+                fontWeight: 'bold',
+                margin: '.5rem 0',
+                textAlign: 'center',
+              }}
+            >
+              Create {typeOfItem === 'Animals' ? 'Animal' : 'Plant'}
+            </h2>
             <Form
               autoComplete="off"
-              className="form-verticalCenter"
               form={form}
               initialValues={{ remember: true }}
-              labelAlign="right"
-              labelCol={{ offset: 2, span: 6 }}
+              labelCol={{ span: 8 }}
+              layout="vertical"
               name="AddItem"
               size="middle"
-              wrapperCol={{ offset: 1, span: 8 }}
+              style={{ fontWeight: 'bold' }}
+              wrapperCol={{ span: 24 }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
             >
@@ -155,7 +165,7 @@ export default function CreateRecord() {
               )}
               <Form.Item className="buttons">
                 <Space>
-                  <Button htmlType="submit" type="primary">
+                  <Button htmlType="submit" style={{ backgroundColor: '#A6E3A1' }}>
                     Submit
                   </Button>
 
@@ -167,7 +177,7 @@ export default function CreateRecord() {
             </Form>
           </div>
         </Content>
-      </Layout>
+      </div>
     </>
   );
 }
