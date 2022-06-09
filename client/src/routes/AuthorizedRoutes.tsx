@@ -12,6 +12,7 @@ import {
   CreateRecord,
   AnimalDelete,
   PlantDelete,
+  AnimalView,
 } from '../pages';
 
 export default function AuthorizedRoutes() {
@@ -40,7 +41,7 @@ export default function AuthorizedRoutes() {
       <PageRouter exact component={AnimalsTable} path={Route.ANIMALS} />
       <PageRouter exact component={AnimalDelete} path={Route.ANIMALS_DELETE} />
       <PageRouter exact component={Home} path={Route.ANIMALS_EDIT} />
-      <PageRouter exact component={Home} path={Route.ANIMALS_VIEW} />
+      <PageRouter exact component={AnimalView} path={Route.ANIMALS_VIEW} />
       <PageRouter exact component={CreateRecord} path={Route.CREATE} />
       <PageRouter component={PageNotFound} />
     </Switch>

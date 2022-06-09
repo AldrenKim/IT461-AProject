@@ -56,14 +56,14 @@ export default function PlantView() {
             Back
           </Button>
           <div style={{ paddingBottom: '2.5em' }}>
-            <p className="head">iNSERT pLANT nAME</p>
-            <p className="view-sub-head sub-head">Insert Scientific Name</p>
+            <p className="head">{plant?.name}</p>
+            <p className="view-sub-head sub-head">{plant?.scientific_name}</p>
             <div className="view-content">
               <p style={{ margin: '.5em 0' }}>
-                <strong>Area</strong>: Insert Area
+                <strong>Area</strong>: {plant?.area}
               </p>
               <p style={{ margin: '.5em 0' }}>
-                <strong>Date Added</strong>: Insert Date
+                <strong>Date Added</strong>: {plant?.date_updated}
               </p>
             </div>
           </div>

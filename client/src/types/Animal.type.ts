@@ -1,6 +1,6 @@
 type Animals = {
   id: string;
-  area: number;
+  count: number;
   date_updated: Date;
   filename: string;
   name: string;
