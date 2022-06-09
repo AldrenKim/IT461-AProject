@@ -80,7 +80,7 @@ export default function Home() {
                 paddingRight: '2rem',
               }}
               type="dashed"
-              onClick={handleGoToPlants}
+              onClick={handleGoToAnimals}
             >
               View Animals
             </Button>
