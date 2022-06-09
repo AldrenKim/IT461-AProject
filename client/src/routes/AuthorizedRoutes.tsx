@@ -9,7 +9,7 @@ import {
   PageNotFound,
   PlantsTable,
   PlantView,
-  CreateRecordView,
+  CreateRecord,
   AnimalDelete,
   PlantDelete,
 } from '../pages';
@@ -41,7 +41,7 @@ export default function AuthorizedRoutes() {
       <PageRouter exact component={AnimalDelete} path={Route.ANIMALS_DELETE} />
       <PageRouter exact component={Home} path={Route.ANIMALS_EDIT} />
       <PageRouter exact component={Home} path={Route.ANIMALS_VIEW} />
-      <PageRouter exact component={CreateRecordView} path={Route.CREATE} />
+      <PageRouter exact component={CreateRecord} path={Route.CREATE} />
       <PageRouter component={PageNotFound} />
     </Switch>
   );

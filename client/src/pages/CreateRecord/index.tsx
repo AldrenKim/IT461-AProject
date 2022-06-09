@@ -3,10 +3,10 @@ import { Button, Layout, Menu, MenuProps, Form, Input, Space, message } from 'an
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-import { addAnimal } from '../../../api/AnimalApi';
-import { addPlant } from '../../../api/PlantApi';
+import { addAnimal } from '../../api/AnimalApi';
+import { addPlant } from '../../api/PlantApi';
 
-import { useAxios } from '../../../hooks';
+import { useAxios } from '../../hooks';
 import './view.css';
 
 const { Header, Content } = Layout;
