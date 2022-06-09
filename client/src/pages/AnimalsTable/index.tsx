@@ -4,11 +4,11 @@ import { ColumnsType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { getAnimals } from '../../../api';
-import background from '../../../assets/AnimalsView-bg.png';
-import { Route } from '../../../enums';
-import { useAxios } from '../../../hooks';
-import { Animal } from '../../../types';
+import { getAnimals } from '../../api';
+import background from '../../assets/AnimalsView-bg.png';
+import { Route } from '../../enums';
+import { useAxios } from '../../hooks';
+import { Animal } from '../../types';
 
 export default function AnimalsTable() {
   const { axios } = useAxios();
