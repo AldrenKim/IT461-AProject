@@ -2,10 +2,10 @@ import { Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { getFile, getPlant } from '../../../api';
-import { ThreeDViewer } from '../../../components';
-import { useAxios } from '../../../hooks';
-import { Plant } from '../../../types';
+import { getFile, getPlant } from '../../api';
+import { ThreeDViewer } from '../../components';
+import { useAxios } from '../../hooks';
+import { Plant } from '../../types';
 
 export default function PlantView() {
   const { id } = useParams<{ id: string }>();

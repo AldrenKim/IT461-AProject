@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-import { deletePlant } from '../../../api/PlantApi';
-import { Route } from '../../../enums';
-import { useAxios } from '../../../hooks';
+import { deletePlant } from '../../api/PlantApi';
+import { Route } from '../../enums';
+import { useAxios } from '../../hooks';
 
 export default function PlantDelete() {
   const { axios } = useAxios();
