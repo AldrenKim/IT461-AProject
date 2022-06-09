@@ -1,5 +1,5 @@
 import { CaretLeftOutlined } from '@ant-design/icons';
-import { Button, Layout, Menu, MenuProps, Form, Input, Space } from 'antd';
+import { Button, Layout, Menu, MenuProps, Form, Input, Space, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -45,6 +45,10 @@ export default function View() {
     history.goBack();
   };
 
+  function returnTables() {
+    history.goBack();
+  }
+
   const onFinish = async (values: any) => {
     let fetchedData;
     if (typeOfItem === 'Animals') {
@@ -52,6 +56,11 @@ export default function View() {
     } else {
       fetchedData = await addPlant(axios, values);
     }
+    message.success({
+      content: `Successfully added ${typeOfItem}!`,
+      duration: 1,
+      onClose: returnTables,
+    });
     console.log(fetchedData);
   };
 
