@@ -2,24 +2,24 @@ import { Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { getFile, getPlant } from '../../api';
+import { getFile, getAnimal } from '../../api';
 import { ThreeDViewer } from '../../components';
 import { useAxios } from '../../hooks';
-import { Plant } from '../../types';
+import { Animal } from '../../types';
 
-export default function PlantView() {
+export default function AnimalView() {
   const { id } = useParams<{ id: string }>();
   const { axios } = useAxios();
-  const [plant, setPlant] = useState<Plant>();
+  const [animal, setAnimal] = useState<Animal>();
   const [object, setObject] = useState<Blob>();
 
   useEffect(() => {
     async function mount() {
-      const fetchedPlant = await getPlant(axios, id);
-      setPlant(fetchedPlant);
+      const fetchedAnimal = await getAnimal(axios, id);
+      setAnimal(fetchedAnimal);
 
-      if (fetchedPlant.filename) {
-        const blob = await getFile(axios, fetchedPlant.filename);
+      if (fetchedAnimal.filename) {
+        const blob = await getFile(axios, fetchedAnimal.filename);
         setObject(blob);
       }
     }
@@ -33,9 +33,9 @@ export default function PlantView() {
       <div style={{ height: '100vh', width: '70vw' }}>
         <ThreeDViewer obj={object} />
       </div>
-      <div>{plant?.name}</div>
-      <div>{plant?.scientific_name}</div>
-      <div>{plant?.area}</div>
+      <div>{animal?.name}</div>
+      <div>{animal?.scientific_name}</div>
+      <div>{animal?.count}</div>
     </Row>
   );
 }

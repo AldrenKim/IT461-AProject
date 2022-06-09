@@ -1,4 +1,5 @@
 import AnimalDelete from './AnimalDelete';
+import AnimalView from './AnimalView';
 import AnimalsTable from './AnimalsTable';
 import CreateRecord from './CreateRecord';
 import Home from './Home';
@@ -10,6 +11,7 @@ import PlantsTable from './PlantsTable';
 
 export {
   AnimalDelete,
+  AnimalView,
   AnimalsTable,
   CreateRecord,
   Home,
