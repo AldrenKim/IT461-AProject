@@ -1,9 +1,11 @@
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Button, Space, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { getAnimals } from '../../../api';
+import background from '../../../assets/AnimalsView-bg.png';
 import { Route } from '../../../enums';
 import { useAxios } from '../../../hooks';
 import { Animal } from '../../../types';
@@ -114,20 +116,69 @@ export default function AnimalsTable() {
 
   return (
     <>
-      <Button onClick={handleGoBack}>Back</Button>
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button onClick={handelAddNewItem}>Add New Item</Button>
-      </div>
-      <Table columns={COLUMNS} dataSource={animals} pagination={false} rowKey="name" />
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Space size="large">
-          <Button disabled={!prev} onClick={handlePrev}>
-            Prev
+      <div
+        style={{
+          backgroundImage: `url(${background})`,
+          backgroundSize: 'cover',
+          height: '100vh',
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1em' }}>
+          <Button
+            icon={<ArrowLeftOutlined />}
+            style={{
+              backgroundColor: '#A6E3A1',
+              fontWeight: 'bold',
+              margin: '2em 1em 0 1em',
+            }}
+            onClick={handleGoBack}
+          >
+            Back
           </Button>
-          <Button disabled={!next} onClick={handleNext}>
-            Next
+
+          <Button
+            style={{
+              backgroundColor: '#A6E3A1',
+              fontWeight: 'bold',
+              margin: '2em 1em 0 1em',
+            }}
+            onClick={handelAddNewItem}
+          >
+            Add New Item
           </Button>
-        </Space>
+        </div>
+        <Table
+          bordered
+          columns={COLUMNS}
+          dataSource={animals}
+          pagination={false}
+          rowKey="name"
+          style={{ margin: '0 1em' }}
+        />
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Space size="large">
+            <Button
+              disabled={!prev}
+              style={{
+                backgroundColor: '#A6E3A1',
+                margin: '1em 1em 0 1em',
+              }}
+              onClick={handlePrev}
+            >
+              Prev
+            </Button>
+            <Button
+              disabled={!next}
+              style={{
+                backgroundColor: '#A6E3A1',
+                margin: '1em 1em 0 1em',
+              }}
+              onClick={handleNext}
+            >
+              Next
+            </Button>
+          </Space>
+        </div>
       </div>
     </>
   );
