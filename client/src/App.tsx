@@ -25,17 +25,21 @@ export default function App() {
   async function login(username: string, password: string) {
     setIsAuthenticating(true);
 
-    const user = await authLogin(username, password);
+    try {
+      const user = await authLogin(username, password);
 
-    if (user?.accessToken) {
-      setAuth(user);
-      setLocalStorage(user);
-      message.success('Logged In');
-    } else {
-      message.error('Error logging in');
+      if (user?.accessToken) {
+        setAuth(user);
+        setLocalStorage(user);
+        message.success('Logged In');
+      } else {
+        message.error('Error logging in');
+      }
+    } catch (err: any) {
+      message.error(err?.message);
+    } finally {
+      setIsAuthenticating(false);
     }
-
-    setIsAuthenticating(false);
   }
 
   async function logout() {
