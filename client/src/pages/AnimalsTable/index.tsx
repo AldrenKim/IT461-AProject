@@ -31,7 +31,7 @@ export default function AnimalsTable() {
   }, []);
 
   function handleGoBack() {
-    history.goBack();
+    history.push(Route.HOME);
   }
 
   function handelAddNewItem() {
@@ -59,26 +59,36 @@ export default function AnimalsTable() {
     {
       dataIndex: 'id',
       key: 'id',
+      sortDirections: ['descend', 'ascend'],
+      sorter: (a, b) => parseInt(a.id) - parseInt(b.id),
       title: 'Id',
     },
     {
       dataIndex: 'name',
       key: 'name',
+      sortDirections: ['descend', 'ascend'],
+      sorter: (a, b) => a.name.localeCompare(b.name),
       title: 'Name',
     },
     {
       dataIndex: 'scientific_name',
       key: 'scientific_name',
+      sortDirections: ['descend', 'ascend'],
+      sorter: (a, b) => a.scientific_name.localeCompare(b.scientific_name),
       title: 'Scientific Name',
     },
     {
       dataIndex: 'count',
       key: 'count',
+      sortDirections: ['descend', 'ascend'],
+      sorter: (a, b) => a.count - b.count,
       title: 'Count',
     },
     {
       dataIndex: 'date_updated',
       key: 'date_updated',
+      sortDirections: ['descend', 'ascend'],
+      sorter: (a, b) => new Date(a.date_updated).getTime() - new Date(b.date_updated).getTime(),
       title: 'Date Last Updated',
     },
     {

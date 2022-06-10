@@ -56,14 +56,16 @@ export default function AnimalView() {
             Back
           </Button>
           <div style={{ paddingBottom: '2.5em' }}>
-            <p className="head">{plant?.name}</p>
-            <p className="view-sub-head sub-head">{plant?.scientific_name}</p>
+            <p className="head">{animal?.name}</p>
+            <p className="view-sub-head sub-head">{animal?.scientific_name}</p>
             <div className="view-content">
               <p style={{ margin: '.5em 0' }}>
-                <strong>Area</strong>: {plant?.area}
+                <strong>Count</strong>: {animal?.count}
               </p>
               <p style={{ margin: '.5em 0' }}>
-                <strong>Date Added</strong>: {plant?.date_updated}
+                <>
+                  <strong>Date Updated</strong>: {animal?.date_updated}
+                </>
               </p>
             </div>
           </div>
