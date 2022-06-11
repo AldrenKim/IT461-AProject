@@ -6,6 +6,7 @@ import Home from './Home';
 import Login from './Login';
 import PageNotFound from './PageNotFound';
 import PlantDelete from './PlantDelete';
+import PlantEdit from './PlantEdit';
 import PlantView from './PlantView';
 import PlantsTable from './PlantsTable';
 
@@ -18,6 +19,7 @@ export {
   Login,
   PageNotFound,
   PlantDelete,
+  PlantEdit,
   PlantView,
   PlantsTable,
 };

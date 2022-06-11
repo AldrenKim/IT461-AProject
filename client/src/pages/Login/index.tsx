@@ -1,18 +1,18 @@
 import { LoadingOutlined } from '@ant-design/icons';
 import { Button, Layout, Row, Col, Form, Input } from 'antd';
 
-import React, { useContext } from 'react';
+import React from 'react';
 
 import background from '../../assets/bg.png';
-import { AuthContext } from '../../contexts';
+import { useAuth } from '../../hooks';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Content } = Layout;
 
 export default function Login() {
-  const { isAuthenticating, login } = useContext(AuthContext);
+  const { isAuthenticating, login } = useAuth();
 
-  async function handleClick() {
-    await login('admin', 'admin');
+  async function handleClick(values: { password: string; username: string }) {
+    await login(values.username, values.password);
   }
 
   const buttonDisplay = isAuthenticating ? <LoadingOutlined /> : 'Login';
@@ -42,17 +42,25 @@ export default function Login() {
                   size="large"
                   style={{ fontWeight: 'bold' }}
                   wrapperCol={{ span: 16 }}
+                  onFinish={handleClick}
                 >
-                  <Form.Item label="Username" name="username" style={{ marginBottom: '0' }}>
+                  <Form.Item
+                    label="Username"
+                    name="username"
+                    rules={[{ required: true }]}
+                    style={{ marginBottom: '0' }}
+                  >
                     <Input />
                   </Form.Item>
-                  <Form.Item label="Password" name="password">
-                    <Input />
+                  <Form.Item label="Password" name="password" rules={[{ required: true }]}>
+                    <Input type="password" />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button htmlType="submit" size="large" style={{ backgroundColor: '#A6E3A1' }}>
+                      {buttonDisplay}
+                    </Button>
                   </Form.Item>
                 </Form>
-                <Button size="large" style={{ backgroundColor: '#A6E3A1' }} onClick={handleClick}>
-                  {buttonDisplay}
-                </Button>
               </div>
             </Col>
           </Row>

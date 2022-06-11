@@ -6,14 +6,14 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import { uploadFile } from '../../api';
 
-import { addAnimal } from '../../api/AnimalApi';
-import { addPlant } from '../../api/PlantApi';
+import { editAnimal, getAnimal } from '../../api/AnimalApi';
 import background from '../../assets/bg.png';
 import { useAxios } from '../../hooks';
+import { Animal } from '../../types';
 
 const { Content } = Layout;
 
-export default function View() {
+export default function AnimalEdit() {
   const { axios } = useAxios();
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
@@ -23,6 +23,7 @@ export default function View() {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [form] = Form.useForm();
+  const [animal, setAnimal] = useState<Animal>();
   const timeOutTms = 500;
 
   const props: UploadProps = {
@@ -44,6 +45,8 @@ export default function View() {
     const today = new Date();
     const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     setDateToday(date);
+
+    return date;
   };
 
   function checkNumber(val: string) {
@@ -68,6 +71,16 @@ export default function View() {
     return () => clearTimeout(timeOutId);
   }, [id, numberQuery]);
 
+  useEffect(() => {
+    async function mount() {
+      const fetchAnimal = await getAnimal(axios, id);
+      setAnimal(fetchAnimal);
+      console.log(fetchAnimal);
+      form.resetFields();
+    }
+    mount();
+  }, [id]);
+
   function handleGoBack() {
     history.goBack();
   }
@@ -76,24 +89,30 @@ export default function View() {
     history.goBack();
   }
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: Animal) => {
+    //console.log(values);
     setIsSaving(true);
     let filename = null;
 
     try {
+      //console.log('test');
+      //console.log(values);
       if (fileList[0]) {
         await uploadFile(axios, fileList[0] as RcFile);
         filename = fileList[0].name;
       }
 
-      if (typeOfItem === 'Animals') {
-        await addAnimal(axios, { ...values, filename });
-      } else {
-        await addPlant(axios, { ...values, filename });
-      }
+      await editAnimal(axios, {
+        ...values,
+        date_updated: new Date(),
+        filename,
+        id,
+      } as Animal);
+      // console.log(values);
+      // console.log(animal);
 
       message.success({
-        content: `Successfully added ${typeOfItem}!`,
+        content: 'Successfully editted animal!',
         duration: 1,
         onClose: returnTables,
       });
@@ -109,16 +128,28 @@ export default function View() {
     }
   };
 
-  const onReset = () => {
-    form.resetFields();
-  };
-
   const onFinishFailed = (errorInfo: any) => {
     message.error({
       content: `Failed to add. There are items in your request that are invalid. ${errorInfo}`,
       duration: 1.5,
     });
+    console.log(errorInfo);
   };
+
+  const handleOnChange = (e: any) => {
+    const fname = e.target.name;
+    const fvalue = e.target.value;
+    form.setFieldsValue({
+      [fname]: fvalue,
+    });
+    //const fields = form.getFieldsValue();
+    // const { projects } = fields;
+    // Object.assign(projects[id], { type: animal });
+    //form.setFieldsValue({ ...values });
+    //console.log(values);
+  };
+
+  //console.log(animal);
 
   return (
     <>
@@ -147,12 +178,12 @@ export default function View() {
                 textAlign: 'center',
               }}
             >
-              Create {typeOfItem === 'Animals' ? 'Animal' : 'Plant'}
+              Edit Animal
             </h2>
             <Form
               autoComplete="off"
               form={form}
-              initialValues={{ remember: true }}
+              initialValues={animal}
               labelCol={{ span: 8 }}
               layout="vertical"
               name="AddItem"
@@ -163,47 +194,37 @@ export default function View() {
               onFinishFailed={onFinishFailed}
             >
               <Form.Item label="Name" name="name" rules={[{ required: true }]}>
-                <Input />
+                <Input onChange={handleOnChange} />
+
+                {/* {console.log(animal?.name)} */}
               </Form.Item>
-              <Form.Item
-                label="Scientific Name"
-                name="scientific_name"
-                rules={[{ required: true }]}
-              >
-                <Input onChange={loadDefault} />
-              </Form.Item>
-              <Form.Item
-                label="Date Updated"
-                name="date_updated"
-                rules={[{ required: true }]}
-                style={{ display: 'none' }}
-              >
-                <Input disabled={true} />
+              <Form.Item label="Scientific Name" rules={[{ required: true }]}>
+                <Form.Item name="scientific_name">
+                  <Input onChange={handleOnChange} />
+                </Form.Item>
+
+                {/* {console.log(animal?.scientific_name)} */}
               </Form.Item>
               <Form.Item label="3d .obj File" name="filename">
                 <Upload {...props}>
                   <Button icon={<UploadOutlined />}>Select File</Button>
                 </Upload>
+                <p>{animal?.filename}</p>
               </Form.Item>
-              {typeOfItem === 'Animals' ? (
-                <Form.Item label="Count" name="count" rules={[{ required: true }]}>
-                  <Input
-                    onChange={(e) => {
-                      setNumberQuery(e.currentTarget.value);
-                    }}
-                  />
-                </Form.Item>
-              ) : (
-                <Form.Item label="Area" name="area" rules={[{ required: true }]}>
+              <Form.Item label="Count" name="count" rules={[{ required: true }]}>
+                <Form.Item name="count">
                   <Input
                     min="1"
                     style={{ width: '100%' }}
                     onChange={(e) => {
                       setNumberQuery(e.currentTarget.value);
+                      handleOnChange(e);
                     }}
                   />
                 </Form.Item>
-              )}
+
+                {/* {console.log(animal?.area)} */}
+              </Form.Item>
               <Form.Item className="buttons">
                 <Space>
                   <Button
@@ -212,10 +233,6 @@ export default function View() {
                     style={{ backgroundColor: '#A6E3A1' }}
                   >
                     {isSaving ? 'Submitting' : 'Submit'}
-                  </Button>
-
-                  <Button disabled={isSaving} htmlType="button" onClick={onReset}>
-                    Reset
                   </Button>
                 </Space>
               </Form.Item>

@@ -63,7 +63,9 @@ export default function PlantView() {
                 <strong>Area</strong>: {plant?.area}
               </p>
               <p style={{ margin: '.5em 0' }}>
-                <strong>Date Added</strong>: {plant?.date_updated}
+                <>
+                  <strong>Date Updated</strong>: {plant?.date_updated}
+                </>
               </p>
             </div>
           </div>

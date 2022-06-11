@@ -84,9 +84,11 @@ class AnimalModel():
         queries = []
         for animal in clean_animals:
             sql = "UPDATE animals SET "
-            for attr, value in animal.__dict__.items():
-                sql += attr + " = " + value
-            sql += "WHERE id = %s"
+            for attr, value in animal.items():
+                sql += attr + " = '" + str(value) + "', "
+            sql = sql[:-2]
+            sql += " WHERE id = %s"
+            print(sql)
             queries.append({"sql": sql, "bind": animal['id']})
         db = Db.get_instance()
         db.transactional(queries)
