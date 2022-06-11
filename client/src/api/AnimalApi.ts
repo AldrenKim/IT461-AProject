@@ -14,8 +14,17 @@ export async function getAnimal(axios: AxiosStatic, id: string): Promise<Animal>
 }
 
 export async function editAnimal(axios: AxiosStatic, data: Animal): Promise<Animal> {
-  return (await axios.put<Animal>(`${ANIMALS_API_URL}/${JSON.stringify(data)}`)).data;
+  console.log(data);
+
+  return (
+    await axios.put(`${ANIMALS_API_URL}/${data.id}`, JSON.stringify(data), {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  ).data;
 }
+
 export async function addAnimal(axios: AxiosStatic, data: Animal): Promise<Animal> {
   return (
     await axios.post(`${ANIMALS_API_URL}/`, JSON.stringify(data), {
