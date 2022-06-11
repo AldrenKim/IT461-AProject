@@ -84,9 +84,11 @@ class PlantModel():
         queries = []
         for plant in clean_plants:
             sql = "UPDATE plants SET "
-            for attr, value in plant.__dict__.items():
-                sql += attr + " = " + value
-            sql += "WHERE id = %s"
+            for attr, value in plant.items():
+                sql += attr + " = '" + str(value) + "', "
+            sql = sql[:-2]
+            sql += " WHERE id = %s"
+            print(sql)
             queries.append({"sql": sql, "bind": plant['id']})
         db = Db.get_instance()
         db.transactional(queries)

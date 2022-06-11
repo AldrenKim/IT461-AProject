@@ -15,7 +15,15 @@ export async function getPlant(axios: AxiosStatic, id: string): Promise<Plant> {
 }
 
 export async function editPlant(axios: AxiosStatic, data: Plant): Promise<Plant> {
-  return (await axios.put<Plant>(`${PLANTS_API_URL}/${JSON.stringify(data)}`)).data;
+  console.log(data);
+
+  return (
+    await axios.put(`${PLANTS_API_URL}/${data.id}`, JSON.stringify(data), {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  ).data;
 }
 
 export async function addPlant(axios: AxiosStatic, data: Plant): Promise<Plant> {
