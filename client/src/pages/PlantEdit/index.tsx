@@ -17,8 +17,6 @@ export default function PlantEdit() {
   const { axios } = useAxios();
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
-  const [typeOfItem, setTypeOfItem] = useState('');
-  const [dateToday, setDateToday] = useState('');
   const [numberQuery, setNumberQuery] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [isSaving, setIsSaving] = useState(false);
@@ -41,14 +39,6 @@ export default function PlantEdit() {
     },
   };
 
-  const DateToday = () => {
-    const today = new Date();
-    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    setDateToday(date);
-
-    return date;
-  };
-
   function checkNumber(val: string) {
     const re = /^[0-9.\b]+$/;
     if (val !== '' && !re.test(val)) {
@@ -59,14 +49,8 @@ export default function PlantEdit() {
     }
   }
 
-  const loadDefault = () => {
-    form.setFieldsValue({ date_updated: dateToday });
-  };
-
   useEffect(() => {
     const timeOutId = setTimeout(() => checkNumber(numberQuery), timeOutTms);
-    setTypeOfItem(id);
-    DateToday();
 
     return () => clearTimeout(timeOutId);
   }, [id, numberQuery]);
@@ -75,10 +59,10 @@ export default function PlantEdit() {
     async function mount() {
       const fetchPlant = await getPlant(axios, id);
       setPlant(fetchPlant);
-      console.log(fetchPlant);
       form.resetFields();
     }
     mount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   function handleGoBack() {
@@ -90,13 +74,11 @@ export default function PlantEdit() {
   }
 
   const onFinish = async (values: Plant) => {
-    //console.log(values);
     setIsSaving(true);
-    let filename = null;
 
     try {
-      //console.log('test');
-      //console.log(values);
+      let filename = values.filename || null;
+
       if (fileList[0]) {
         await uploadFile(axios, fileList[0] as RcFile);
         filename = fileList[0].name;
@@ -108,11 +90,9 @@ export default function PlantEdit() {
         filename,
         id,
       } as Plant);
-      // console.log(values);
-      // console.log(plant);
 
       message.success({
-        content: 'Successfully editted plant!',
+        content: 'Successfully edited plant!',
         duration: 1,
         onClose: returnTables,
       });
@@ -133,7 +113,6 @@ export default function PlantEdit() {
       content: `Failed to add. There are items in your request that are invalid. ${errorInfo}`,
       duration: 1.5,
     });
-    console.log(errorInfo);
   };
 
   const handleOnChange = (e: any) => {
@@ -142,14 +121,7 @@ export default function PlantEdit() {
     form.setFieldsValue({
       [fname]: fvalue,
     });
-    //const fields = form.getFieldsValue();
-    // const { projects } = fields;
-    // Object.assign(projects[id], { type: plant });
-    //form.setFieldsValue({ ...values });
-    //console.log(values);
   };
-
-  //console.log(plant);
 
   return (
     <>
@@ -195,15 +167,11 @@ export default function PlantEdit() {
             >
               <Form.Item label="Name" name="name" rules={[{ required: true }]}>
                 <Input onChange={handleOnChange} />
-
-                {/* {console.log(plant?.name)} */}
               </Form.Item>
               <Form.Item label="Scientific Name" rules={[{ required: true }]}>
                 <Form.Item name="scientific_name">
                   <Input onChange={handleOnChange} />
                 </Form.Item>
-
-                {/* {console.log(plant?.scientific_name)} */}
               </Form.Item>
               <Form.Item label="3d .obj File" name="filename">
                 <Upload {...props}>
@@ -222,8 +190,6 @@ export default function PlantEdit() {
                     }}
                   />
                 </Form.Item>
-
-                {/* {console.log(plant?.area)} */}
               </Form.Item>
               <Form.Item className="buttons">
                 <Space>

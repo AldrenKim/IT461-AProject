@@ -25,9 +25,7 @@ export default function Login() {
             <Col
               span={12}
               style={{ backgroundImage: `url(${background})`, backgroundSize: 'cover' }}
-            >
-              col-12
-            </Col>
+            ></Col>
             <Col className="center" span={12}>
               <div style={{ marginLeft: '3em' }}>
                 <div style={{ paddingBottom: '2.5em' }}>

@@ -1,13 +1,17 @@
 import { AxiosStatic } from 'axios';
 
-import { API_VERSION, BASE_API_URL } from '../config';
+import { API_VERSION, BASE_API_URL, TABLE_ITEMS_COUNT } from '../config';
 import { ApiRoute } from '../enums';
 import { BaseData, Plant } from '../types';
 
 const PLANTS_API_URL = `${BASE_API_URL}${API_VERSION}${ApiRoute.PLANTS}`;
 
 export async function getPlants(axios: AxiosStatic, url?: string): Promise<BaseData<Plant>> {
-  return (await axios.get<BaseData<Plant>>(url || `${PLANTS_API_URL}/?limit=3&offset=0`)).data;
+  return (
+    await axios.get<BaseData<Plant>>(
+      url || `${PLANTS_API_URL}/?limit=${TABLE_ITEMS_COUNT}&offset=0`,
+    )
+  ).data;
 }
 
 export async function getPlant(axios: AxiosStatic, id: string): Promise<Plant> {
@@ -15,8 +19,6 @@ export async function getPlant(axios: AxiosStatic, id: string): Promise<Plant> {
 }
 
 export async function editPlant(axios: AxiosStatic, data: Plant): Promise<Plant> {
-  console.log(data);
-
   return (
     await axios.put(`${PLANTS_API_URL}/${data.id}`, JSON.stringify(data), {
       headers: {
