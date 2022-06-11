@@ -7,7 +7,7 @@ class UserRouter():
     def handler():
         app = Blueprint('users', __name__, url_prefix='/v1/users')
         app.before_request(jwt_token_required)
-        app.before_request(admin_required)
+        # app.before_request(admin_required)
         controller = UserController()
         app.add_url_rule('/', methods=['POST'], view_func=controller.post)
         app.add_url_rule('/', methods=['GET'], view_func=controller.get)
