@@ -36,7 +36,7 @@ export default function App() {
         message.error('Error logging in');
       }
     } catch (err: any) {
-      message.error(err?.message);
+      message.error('Unable to login');
     } finally {
       setIsAuthenticating(false);
     }

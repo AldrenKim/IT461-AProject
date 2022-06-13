@@ -8,7 +8,7 @@ class UserModel():
         for user in users:
             if not isinstance(user, dict):
                 continue
-            if not ('id' in user and 'username' in user and 'type' in user):
+            if not ('username' in user and 'password' in user and 'type' in user):
                 continue
             clean_users.append(user)
         return clean_users
@@ -21,8 +21,8 @@ class UserModel():
             return False
         queries = []
         for user in clean_users:
-            sql = "INSERT INTO users(username, type) VALUES(%s, %s)"
-            queries.append({"sql": sql, "bind": (user['username'], user['type'])})
+            sql = "INSERT INTO users(username, password, email, type) VALUES(%s, %s, %s, %s)"
+            queries.append({"sql": sql, "bind": (user['username'], user['password'], user['email'], user['type'])})
         db = Db.get_instance()
         result = db.transactional(queries)
         return users

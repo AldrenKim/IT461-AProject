@@ -48,10 +48,10 @@ def login(username, password):
         return token, user
     return False
 
-def register(username, password, type = 'FARMER'):
+def register(username, password, email, type = 'FARMER'):
     db = Db.get_instance()
     queries = []
-    sql = "INSERT INTO users(username, password, type) VALUES(%s, %s, %s)"
-    queries.append({"sql": sql, "bind": (username, password, type)})
+    sql = "INSERT INTO users(username, password, email, type) VALUES(%s, %s, %s, %s)"
+    queries.append({"sql": sql, "bind": (username, password, email, type)})
     result = db.transactional(queries)
     return result

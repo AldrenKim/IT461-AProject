@@ -27,11 +27,11 @@ export async function authLogin(username: string, password: string): Promise<Use
 export async function authRegister(
   username: string,
   password: string,
-  type?: UserType,
+  email: string,
 ): Promise<void> {
   const params = JSON.stringify({
+    email,
     password,
-    type,
     username,
   });
 
