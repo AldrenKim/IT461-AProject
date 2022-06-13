@@ -9,6 +9,7 @@ import PlantDelete from './PlantDelete';
 import PlantEdit from './PlantEdit';
 import PlantView from './PlantView';
 import PlantsTable from './PlantsTable';
+import Register from './Register';
 
 export {
   AnimalDelete,
@@ -22,4 +23,5 @@ export {
   PlantEdit,
   PlantView,
   PlantsTable,
+  Register,
 };

@@ -3,7 +3,7 @@ import { Route as PageRouter, Switch, useHistory } from 'react-router-dom';
 
 import { Route } from '../enums';
 import { useAuth } from '../hooks';
-import { Login, PageNotFound } from '../pages';
+import { Login, PageNotFound, Register } from '../pages';
 
 export default function UnauthorizedRoutes() {
   const { auth } = useAuth();
@@ -18,6 +18,7 @@ export default function UnauthorizedRoutes() {
   return (
     <Switch>
       <PageRouter exact component={Login} path={Route.LOGIN} />
+      <PageRouter exact component={Register} path={Route.REGISTER} />
       <PageRouter component={PageNotFound} />
     </Switch>
   );

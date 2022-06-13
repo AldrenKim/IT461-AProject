@@ -42,7 +42,7 @@ def register():
     data = request.json
     if 'username' in data and 'password' in data:
         user_type = 'FARMER' if 'type' not in data else data['type']
-        user = auth_register(data['username'], data['password'], user_type)
+        user = auth_register(data['username'], data['password'], data['email'], user_type)
         if user:
             return jsonify({'ok': 'User registered'})
     return jsonify({'message': 'Not registered'}), 403
