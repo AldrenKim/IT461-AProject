@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { authRegister } from '../../api';
 
 import background from '../../assets/bg.png';
-import { useAxios } from '../../hooks';
+import { Route } from '../../enums';
 
 const { Content } = Layout;
 
@@ -25,7 +25,7 @@ export default function Register() {
   const onFinish = async (values: any) => {
     try {
       setIsSaving(true);
-      const response = await authRegister(values.username, values.password, values.email);
+      await authRegister(values.username, values.password, values.email);
       message.success({
         content: `Successfully added ${values.username}!`,
         duration: 1,
@@ -44,6 +44,10 @@ export default function Register() {
       duration: 1.5,
     });
   };
+
+  async function handleGotoLogin() {
+    history.push(Route.LOGIN);
+  }
 
   return (
     <Layout>
@@ -105,6 +109,13 @@ export default function Register() {
                   </Form.Item>
                 </Form>
               </div>
+              <hr style={{ width: 650 }}></hr>
+              <p style={{ textAlign: 'center' }}>
+                Already have an account?
+                <Button style={{ color: '#23EF12' }} type="link" onClick={handleGotoLogin}>
+                  Sign in
+                </Button>
+              </p>
             </Col>
           </Row>
         </Content>
