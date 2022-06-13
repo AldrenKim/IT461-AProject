@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 from v1.animal.router import AnimalRouter
 from v1.plant.router import PlantRouter
 from v1.user.router import UserRouter
-from v1.auth import login as auth_login, verify_token as auth_verify_token
+from v1.auth import login as auth_login, verify_token as auth_verify_token, register as auth_register
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
@@ -36,6 +36,16 @@ def verify_token():
     if not auth_verify_token(token):
         return jsonify({'message': 'Invalid token'}), 403
     return jsonify({'ok': 'Token is valid'})
+
+@app.route('/v1/register', methods=['POST'])
+def register():
+    data = request.json
+    if 'username' in data and 'password' in data:
+        user_type = 'FARMER' if 'type' not in data else data['type']
+        user = auth_register(data['username'], data['password'], user_type)
+        if user:
+            return jsonify({'ok': 'User registered'})
+    return jsonify({'message': 'Not registered'}), 403
 
 @app.route('/v1/files', methods = ['POST'])
 def upload_file():

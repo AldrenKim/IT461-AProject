@@ -47,3 +47,11 @@ def login(username, password):
         token = jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm='HS256')
         return token, user
     return False
+
+def register(username, password, type = 'FARMER'):
+    db = Db.get_instance()
+    queries = []
+    sql = "INSERT INTO users(username, password, type) VALUES(%s, %s, %s)"
+    queries.append({"sql": sql, "bind": (username, password, type)})
+    result = db.transactional(queries)
+    return result

@@ -3,6 +3,7 @@ enum ApiRoute {
   FILES = '/files',
   LOGIN = '/login',
   PLANTS = '/plants',
+  REGISTER = '/register',
   USERS = '/users',
   VERIFY_TOKEN = '/verify-token',
 }
