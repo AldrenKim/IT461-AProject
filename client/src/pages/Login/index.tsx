@@ -2,17 +2,24 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Button, Layout, Row, Col, Form, Input } from 'antd';
 
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import background from '../../assets/bg.png';
+import { Route } from '../../enums';
 import { useAuth } from '../../hooks';
 
 const { Content } = Layout;
 
 export default function Login() {
   const { isAuthenticating, login } = useAuth();
+  const history = useHistory();
 
   async function handleClick(values: { password: string; username: string }) {
     await login(values.username, values.password);
+  }
+
+  async function handleGotoRegister() {
+    history.push(Route.REGISTER);
   }
 
   const buttonDisplay = isAuthenticating ? <LoadingOutlined /> : 'Login';
@@ -60,6 +67,13 @@ export default function Login() {
                   </Form.Item>
                 </Form>
               </div>
+              <hr style={{ width: 650 }}></hr>
+              <p style={{ textAlign: 'center' }}>
+                Don&apos;t have an account?
+                <Button style={{ color: '#23EF12' }} type="link" onClick={handleGotoRegister}>
+                  Sign up
+                </Button>
+              </p>
             </Col>
           </Row>
         </Content>

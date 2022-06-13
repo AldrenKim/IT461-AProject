@@ -21,8 +21,8 @@ class UserModel():
             return False
         queries = []
         for user in clean_users:
-            sql = "INSERT INTO users(username, type) VALUES(%s, %s)"
-            queries.append({"sql": sql, "bind": (user['username'], user['type'])})
+            sql = "INSERT INTO users(username, type, email) VALUES(%s, %s, %s)"
+            queries.append({"sql": sql, "bind": (user['username'], user['type'],user['email'])})
         db = Db.get_instance()
         result = db.transactional(queries)
         return users

@@ -5,6 +5,7 @@ enum Route {
   ANIMALS_DELETE = '/animals/delete/:id',
   HOME = '/',
   LOGIN = '/login',
+  REGISTER = '/register',
   PLANTS = '/plants',
   PLANTS_VIEW = '/plants/view/:id',
   PLANTS_EDIT = '/plants/edit/:id',
