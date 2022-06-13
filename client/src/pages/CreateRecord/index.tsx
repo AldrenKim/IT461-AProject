@@ -20,23 +20,25 @@ export default function View() {
   const [typeOfItem, setTypeOfItem] = useState('');
   const [dateToday, setDateToday] = useState('');
   const [numberQuery, setNumberQuery] = useState('');
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [uploadedFile, setUploadedFile] = useState<UploadFile>();
   const [isSaving, setIsSaving] = useState(false);
   const [form] = Form.useForm();
   const timeOutTms = 500;
 
   const props: UploadProps = {
     beforeUpload: (file) => {
-      setFileList([...fileList, file]);
+      const isOBJ = file.name.split('.')[1] === 'obj';
+      if (!isOBJ) {
+        message.error(`${file.name} is not an obj file`);
+      } else {
+        setUploadedFile(file);
+      }
 
       return false;
     },
-    fileList,
-    onRemove: (file) => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
-      newFileList.splice(index, 1);
-      setFileList(newFileList);
+    fileList: uploadedFile ? [uploadedFile] : [],
+    onRemove: () => {
+      setUploadedFile(undefined);
     },
   };
 
@@ -81,9 +83,9 @@ export default function View() {
     let filename = null;
 
     try {
-      if (fileList[0]) {
-        await uploadFile(axios, fileList[0] as RcFile);
-        filename = fileList[0].name;
+      if (uploadedFile) {
+        await uploadFile(axios, uploadedFile as RcFile);
+        filename = uploadedFile.name;
       }
 
       if (typeOfItem === 'Animals') {
@@ -97,7 +99,7 @@ export default function View() {
         duration: 1,
         onClose: returnTables,
       });
-      setFileList([]);
+      setUploadedFile(undefined);
     } catch (err: any) {
       if (err?.message.includes('400')) {
         message.error('Ensure file format is .obj');
