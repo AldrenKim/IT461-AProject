@@ -87,6 +87,7 @@ export default function PlantsTable() {
     {
       dataIndex: 'date_updated',
       key: 'date_updated',
+      render: (date: string) => new Date(date).toLocaleDateString(),
       sortDirections: ['descend', 'ascend'],
       sorter: (a, b) => new Date(a.date_updated).getTime() - new Date(b.date_updated).getTime(),
       title: 'Date Last Updated',
